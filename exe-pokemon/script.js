@@ -33,3 +33,44 @@ const data = [{
     "art_url": "http://assets22.pokemon.com/assets/cms2/img/pokedex/full/005.png",
     "types": ["fire"]
 }]
+
+const poke = document.getElementById('root');
+const container = document.createElement('div');
+container.setAttribute('class', 'container');
+
+poke.appendChild(container);
+
+// for (let i = 0; i < data.length; i++) {
+//     let pokemon = data[i];
+// ------ ou ----
+data.forEach((pokemon) => {
+
+    const card = document.createElement('div');
+    card.setAttribute('class', 'card');
+    container.appendChild(card);
+
+    const h1 = document.createElement('h1');
+    h1.textContent = pokemon.name;
+    card.appendChild(h1)
+
+    const img = document.createElement('img');
+    img.setAttribute('src', pokemon.art_url);
+    // ---ou image.src = pokemon.art_url;
+    h1.appendChild(img)
+
+    const p = document.createElement('p');
+    p.textContent = pokemon.description;
+    card.appendChild(p);
+
+    const type = document.createElement('p')
+    if (pokemon.types.length > 0) {
+        type.innerHTML = 'Type: ' + pokemon.types[0] + ' and ' + pokemon.types[1];
+    } else {
+        type.innerHTML = 'Type: ' + pokemon.type[0];
+    } 
+    h1.appendChild(type);
+
+});
+
+
+// http://gabsferreira.com/#open -- postman
