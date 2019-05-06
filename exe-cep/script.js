@@ -1,25 +1,37 @@
-//------ http://viacep.com.br/
+// //------ http://viacep.com.br/
+// ---- Pegando o elemento #CEP HTML -------
+const cep = document.getElementById('cep');
+// escrevendo no console o valor do CEP 
+console.log(cep.value);
 
-fetch('http://viacep.com.br/ws/01001000/json/')
-// fetch('http://viacep.com.br/ws/' + this.cep + '/json/')
-.then(function(response){
-    return response.json();
-})
+cep.addEventListener('focusout', () => {
+    console.log('Focus Out')
 
-.then(function(data){
-    console.log("SUCESSO!!")
-    console.log(data)
+    fetch(`https://viacep.com.br/ws/${cep.value}/json/`)
+        // fetch('http://viacep.com.br/ws/' + cep.value + '/json/')
+        .then((response) => {
+            return response.json();
+        })
 
-    data.forEach(CEP =>{
-        const local = document.querySelector('input')
-        const estado = document.getElementById('estado');
-        estado.value = CEP.CEP;
+        .then((data) => {
+            //---- Pode usar os dados da API -----
+            const estado = document.getElementById('estado');
+            estado.value = data.uf;
+            //---- pode ser utilizado sem criação de variável/constante = document.getElementById('estado').value = data.uf;
 
+            const cidade = document.getElementById('cidade');
+            cidade.value = data.localidade;
 
-       
-    })
-})
+            const bairro = document.getElementById('bairro');
+            bairro.value = data.bairro;
 
-.catch(function(erro){
-    console.log(erro)
+            const endereco = document.getElementById('endereco');
+            endereco.value = data.logradouro;
+
+            console.log(data);
+        })
+
+        .catch((erro) => {
+            console.log(erro)
+        })
 })
